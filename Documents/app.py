@@ -5,6 +5,7 @@ import pandas as pd
 import joblib
 
 # Carregar modelo treinado
+
 model = joblib.load('modelo_cardiaco.pkl')
 
 st.set_page_config(page_title="Previsão de Risco Cardíaco", layout="centered")
