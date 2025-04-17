@@ -39,3 +39,4 @@ O modelo foi treinado com dados reais de pacientes (dataset público do Kaggle) 
 1. Clone este repositório:
    ```bash
    git clone https://github.com/seuusuario/predict-health-risk-ia.git
+2. Run o codigo launcher.apy
