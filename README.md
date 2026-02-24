@@ -2,7 +2,7 @@
 
 > Ferramenta de triagem de risco cardíaco com Machine Learning — do dado clínico à predição em tempo real.
 
-![Interface](src\img\image.png)
+![Interface](src/img/image.png)
 
 ---
 
