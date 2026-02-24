@@ -2,7 +2,7 @@
 
 > Ferramenta de triagem de risco cardíaco com Machine Learning — do dado clínico à predição em tempo real.
 
-![Interface](src/img/image.png)
+![Interface](src\img\image.png)
 
 ---
 
@@ -19,6 +19,33 @@ Doenças cardiovasculares são a principal causa de morte no mundo. O diagnósti
 Modelo de classificação binária (**Alto Risco / Baixo Risco**) treinado com dados clínicos reais, validado com cross-validation de 5 folds e otimizado via `RandomizedSearchCV` com foco em **recall** — minimizando falsos negativos, que representam o erro de maior impacto clínico na saúde.
 
 Entregue como aplicação web via **Streamlit**, permitindo que qualquer pessoa insira dados clínicos e receba uma predição instantânea, sem necessidade de infraestrutura técnica.
+
+---
+
+## 🔍 Análise Exploratória dos Dados (EDA)
+
+Antes de modelar, os dados foram investigados em profundidade para garantir qualidade e extrair insights clínicos.
+
+**Qualidade dos dados**
+172 pacientes apresentavam Colesterol = 0 — biologicamente impossível. Esses valores foram tratados como ausentes e substituídos pela mediana do grupo (doente/saudável), preservando o padrão clínico de cada classe.
+
+**Principais descobertas**
+
+| Variável | Saudável (mediana) | Doença (mediana) | Diferença |
+|---|---|---|---|
+| Idade | 51 anos | 57 anos | +11.8% |
+| MaxHR | 150 bpm | 126 bpm | **-16.0%** |
+| Colesterol | 231 mg/dL | 246 mg/dL | +6.3% |
+| Oldpeak | 0.0 | 1.2 | **↑ forte** |
+| RestingBP | 130 mmHg | 132 mmHg | +1.5% |
+
+**Insights clínicos extraídos:**
+
+- **Oldpeak** é o indicador mais discriminante — pacientes doentes têm depressão do segmento ST significativamente maior, consistente com a literatura cardiológica
+- **MaxHR** inversamente associado à doença — frequência cardíaca máxima mais baixa indica menor capacidade funcional cardíaca
+- **FastingBS** (glicemia em jejum > 120) aparece quase exclusivamente em pacientes doentes, sugerindo forte associação com risco metabólico-cardiovascular
+- **Colesterol** apresenta alta variabilidade e outliers expressivos — variável ruidosa que exigiu tratamento cuidadoso
+- **Idade** média dos doentes é 6 anos superior, reforçando o risco crescente com o envelhecimento
 
 ---
 
@@ -39,10 +66,6 @@ Entregue como aplicação web via **Streamlit**, permitindo que qualquer pessoa 
 ```
 
 O modelo identifica corretamente **91% dos pacientes com risco cardíaco real** — o falso negativo (doente classificado como saudável) é o erro mais perigoso na saúde e foi o critério principal de otimização.
-
-**Important variables**
-
-![Interface](src/img/feature_importance.png)
 
 ---
 
