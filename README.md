@@ -92,8 +92,12 @@ O modelo identifica corretamente **91% dos pacientes com risco cardíaco real** 
 ├── modelo_cardiaco.pkl      # Modelo treinado serializado
 ├── requirements.txt         # Dependências
 └── src/
-    └── DataSet/
-        └── heart.csv        # Dataset
+    ├── models/
+    │    └── modelo_cardiaco.pkl  # Modelo treinado serializado
+    ├── DataSet/
+    │    └── heart.csv        # Dataset
+    └── img/
+        
 ```
 
 ---
