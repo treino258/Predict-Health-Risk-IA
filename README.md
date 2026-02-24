@@ -87,9 +87,10 @@ O modelo identifica corretamente **91% dos pacientes com risco cardíaco real** 
 ## 📁 Estrutura do Projeto
 
 ```
+├── Documents
+    └── app.py               # streamlit
 ├── model.ipynb              # Notebook de treinamento e avaliação
 ├── launcher.py              # Inicializador da aplicação
-├── modelo_cardiaco.pkl      # Modelo treinado serializado
 ├── requirements.txt         # Dependências
 └── src/
     ├── models/
