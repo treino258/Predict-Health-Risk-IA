@@ -1,7 +1,7 @@
 import subprocess
 import os
 base_dir = os.path.dirname(os.path.abspath(__file__))
-streamlit_path = os.path.join(base_dir, 'Documents', 'app.py')
+streamlit_path = os.path.join(base_dir, 'src', 'app', 'app.py')
 arquivo_streamlit = streamlit_path 
 
 try:

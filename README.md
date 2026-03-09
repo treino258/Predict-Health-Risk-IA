@@ -59,6 +59,8 @@ Antes de modelar, os dados foram investigados em profundidade para garantir qual
 | F1-Score — Alto Risco (classe 1) | 90% |
 | Média de Recall (Cross-Validation) | ~82% |
 
+---
+
 **Confusion Matrix:**
 ```
 [[70  12]   → 70 saudáveis corretos | 12 falsos positivos
@@ -66,6 +68,42 @@ Antes de modelar, os dados foram investigados em profundidade para garantir qual
 ```
 
 O modelo identifica corretamente **91% dos pacientes com risco cardíaco real** — o falso negativo (doente classificado como saudável) é o erro mais perigoso na saúde e foi o critério principal de otimização.
+
+---
+
+## 🧠 Decisões Técnicas
+**Por que Recall como métrica principal?**
+Em triagem cardíaca, os dois tipos de erro têm custos assimétricos:
+
+Falso Negativo (alto risco classificado como baixo): paciente não recebe atenção médica → consequência potencialmente fatal
+Falso Positivo (baixo risco classificado como alto): paciente faz exames desnecessários → custo controlável
+
+Por isso, minimizar Falsos Negativos é prioridade. O Recall mede exatamente isso: dos pacientes que realmente têm alto risco, quantos o modelo identifica corretamente?
+
+Acurácia seria uma métrica enganosa aqui — com dataset desbalanceado, um modelo que classifica tudo como "baixo risco" pode ter acurácia alta e Recall zero.
+
+Resultado obtido: 91% de Recall e 90% de F1-Score na classe de alto risco.
+
+**Por que RandomForestClassifier?**
+Três razões práticas para esse problema:
+
+Interpretabilidade: fornece feature_importances_, permitindo entender quais variáveis clínicas mais influenciam o risco — essencial em contexto médico
+Robustez a outliers: dados clínicos têm ruído natural (ex: 172 registros de colesterol inconsistentes tratados via imputação por mediana)
+Desempenho sem escalonamento: diferente de SVM ou KNN, não exige normalização das features, simplificando o pipeline de inferência
+
+
+**Por que imputação por mediana no colesterol?**
+172 registros apresentavam colesterol = 0, valor clinicamente impossível.
+Duas opções foram consideradas:
+
+Remover os registros: perderia ~18% do dataset — impacto significativo para um modelo de saúde
+Imputar pela mediana: preserva os dados e é robusto a outliers, ao contrário da média
+
+A mediana foi escolhida por ser menos sensível aos valores extremos presentes na distribuição de colesterol.
+
+**Por que validação cruzada (5-fold) além do train_test_split?**
+O train_test_split avalia o modelo em uma única divisão — resultado dependente do acaso da partição.
+A validação cruzada com 5 folds garante que todo dado foi usado tanto para treino quanto para teste, produzindo uma estimativa mais confiável da capacidade de generalização do modelo.
 
 ---
 
@@ -85,14 +123,13 @@ O modelo identifica corretamente **91% dos pacientes com risco cardíaco real** 
 ---
 
 ## 📁 Estrutura do Projeto
-
 ```
-├── Documents
-    └── app.py               # streamlit
 ├── model.ipynb              # Notebook de treinamento e avaliação
 ├── launcher.py              # Inicializador da aplicação
 ├── requirements.txt         # Dependências
 └── src/
+    ├── app/
+    │    └── app.py
     ├── models/
     │    └── modelo_cardiaco.pkl  # Modelo treinado serializado
     ├── DataSet/

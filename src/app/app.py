@@ -1,20 +1,21 @@
 # app.py - Interface com Streamlit para previsão de risco cardíaco
+from pathlib import Path
 import streamlit as st
 import pandas as pd
 import joblib
 import os
 
 # Carregar modelo treinado
-base_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.abspath(os.path.join(base_dir, "..", "src", "models", "modelo_cardiaco.pkl"))
-print(f"Tentando carregar o modelo em: {model_path}")
+BASE_DIR = Path(__file__).resolve().parent.parent  # src/app → src/
+MODEL_PATH = BASE_DIR / "models" / "modelo_cardiaco.pkl"
+print(f"Tentando carregar o modelo em: {MODEL_PATH}")
 
-if not os.path.exists(model_path):
-    st.error(f"❌ Arquivo não encontrado! O Python procurou em: {model_path}")
+if not os.path.exists(MODEL_PATH):
+    st.error(f"❌ Arquivo não encontrado! O Python procurou em: {MODEL_PATH}")
     st.info("Verifique se a pasta 'src' está fora da pasta 'Documents'.")
     st.stop()
 
-pipeline = joblib.load(model_path)
+pipeline = joblib.load(MODEL_PATH)
 
 st.set_page_config(page_title="Previsão de Risco Cardíaco", layout="centered")
 st.title("Previsão de Risco Cardíaco com IA")
