@@ -1,3 +1,10 @@
+![status](https://img.shields.io/badge/status-stable-brightgreen)  ![python](https://img.shields.io/badge/python-3.10%2B-blue)
+ 
+![tests](https://img.shields.io/badge/tests-pytest-blue) ![license](https://img.shields.io/badge/license-MIT-lightgrey)
+  
+![build](https://github.com/treino258/Predict-Health-Risk-IA/actions/workflows/tests.yml/badge.svg)
+
+
 # 🫀 Predict Health Risk IA
 
 > Ferramenta de triagem de risco cardíaco com Machine Learning — do dado clínico à predição em tempo real.
