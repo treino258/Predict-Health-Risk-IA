@@ -12,7 +12,14 @@ MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'src', 'models', 'mod
 def modelo():
     """Carrega o modelo uma vez para todos os testes do módulo."""
     assert os.path.exists(MODEL_PATH), f"Modelo não encontrado: {MODEL_PATH}"
-    return joblib.load(MODEL_PATH)
+    loaded = joblib.load(MODEL_PATH)
+    return loaded["model"]  # Acessa o pipeline dentro do dicionário salvo
+
+@pytest.fixture(scope="module")
+def threshold():
+    """Carrega o threshold uma vez para todos os testes do módulo."""
+    loaded = joblib.load(MODEL_PATH)
+    return loaded.get("threshold")
 
 
 @pytest.fixture
@@ -78,7 +85,12 @@ def test_predicao_baixo_risco(modelo, paciente_baixo_risco):
         "Paciente de baixo risco foi classificado como alto risco. "
         "Verifique o modelo ou o perfil de teste."
     )
-
+    
+def test_predicao_com_threshold(modelo, threshold, dados_exemplo):
+    proba = modelo.predict_proba(dados_exemplo)[0][1]
+    pred = int(proba >= threshold)
+    
+    assert pred in [0, 1]
 
 def test_probabilidade_alto_risco_maior_que_50(modelo, paciente_alto_risco):
     """A probabilidade de doença cardíaca deve ser > 50% para perfil de alto risco."""
