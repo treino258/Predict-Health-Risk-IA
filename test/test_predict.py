@@ -87,7 +87,7 @@ def test_predicao_baixo_risco(modelo, paciente_baixo_risco):
     )
     
 def test_predicao_com_threshold(modelo, threshold, paciente_baixo_risco, paciente_alto_risco):
-    proba = threshold.predict_proba(paciente_baixo_risco, paciente_alto_risco)[0][1]
+    proba = modelo.predict_proba(paciente_baixo_risco, paciente_alto_risco)[0][1]
     pred = int(proba >= threshold)
     
     assert pred in [0, 1]
