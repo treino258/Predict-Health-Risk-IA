@@ -9,6 +9,8 @@
 
 > Ferramenta de triagem de risco cardíaco com Machine Learning — do dado clínico à predição em tempo real.
 
+📌 Este projeto tem caráter educacional e demonstra boas práticas de Machine Learning, incluindo validação adequada, ajuste de threshold e calibração de probabilidades. Para uso em produção clínica, seriam necessários validação externa, aprovação regulatória e integração com especialistas da área da saúde.
+
 ![Interface](src/img/image.png)
 
 ---
@@ -112,7 +114,89 @@ A mediana foi escolhida por ser menos sensível aos valores extremos presentes n
 O train_test_split avalia o modelo em uma única divisão — resultado dependente do acaso da partição.
 A validação cruzada com 5 folds garante que todo dado foi usado tanto para treino quanto para teste, produzindo uma estimativa mais confiável da capacidade de generalização do modelo.
 
+**Por que calibrar probabilidades (CalibratedClassifierCV)?**
+
+Modelos baseados em árvores, como RandomForest, frequentemente produzem probabilidades mal calibradas — ou seja, o valor retornado por predict_proba não representa corretamente a probabilidade real do evento.
+
+Isso impacta diretamente o uso de threshold, pois decisões baseadas em probabilidades imprecisas podem ser inconsistentes.
+
+**Por que ajuste de threshold na decisão final?**
+
+Por padrão, modelos de classificação utilizam um threshold fixo de 0.5 para converter probabilidades em classes. No entanto, esse valor é arbitrário e nem sempre adequado para problemas reais.
+
+Neste projeto, o modelo foi otimizado para recall, pois o erro mais crítico é o falso negativo (paciente de alto risco classificado como baixo risco). Para alinhar a decisão do modelo com esse objetivo clínico, foi necessário analisar diferentes thresholds.
 ---
+
+## ⚠️ Limitações do Modelo
+
+Apesar dos bons resultados, este modelo possui limitações importantes que devem ser consideradas antes de uso em ambiente real:
+
+**1. Dataset limitado e potencialmente enviesado**
+
+O modelo foi treinado em um dataset específico, que pode não representar toda a população.
+
+Pode haver viés em relação a:
+idade
+gênero
+perfil clínico
+O modelo pode não generalizar bem para outros contextos (hospitais, países, etc.)
+
+**2. Não substitui diagnóstico médico**
+
+O modelo é uma ferramenta de triagem, não de diagnóstico.
+
+Não considera contexto clínico completo
+Não substitui exames ou avaliação profissional
+Deve ser usado apenas como apoio à decisão
+
+**3. Sensibilidade vs Precisão (trade-off)**
+
+O modelo foi otimizado para recall, priorizando a detecção de pacientes de alto risco.
+
+Vantagem:
+reduz falsos negativos (casos graves não detectados)
+Desvantagem:
+aumenta falsos positivos (alertas desnecessários)
+
+Isso pode gerar maior carga operacional em um ambiente real.
+
+**4. Dependência de qualidade dos dados de entrada**
+
+O desempenho do modelo depende diretamente da qualidade dos dados fornecidos:
+
+erros de input → previsões erradas
+dados incompletos → comportamento imprevisível
+
+**5. Probabilidades dependem de calibração**
+
+Mesmo com calibração aplicada, as probabilidades ainda são uma estimativa estatística, não uma verdade absoluta.
+
+Pequenas variações nos dados podem alterar o resultado
+O threshold precisa ser ajustado conforme o contexto de uso
+
+**6. Modelo estático (não aprende em produção)**
+
+O modelo atual:
+
+não se atualiza automaticamente
+não aprende com novos dados
+
+Para uso real, seria necessário:
+
+monitoramento contínuo
+re-treinamento periódico
+
+**7. Interpretabilidade limitada**
+
+Apesar do uso de Random Forest:
+
+o modelo não é totalmente interpretável
+não explica diretamente o "porquê" da decisão
+
+Em aplicações críticas, técnicas como:
+
+SHAP
+Feature Importance detalhada
 
 ## 🧠 Como funciona
 

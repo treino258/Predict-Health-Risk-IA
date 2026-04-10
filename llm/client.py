@@ -29,7 +29,7 @@ Regras:
 def create_chat():
     """Cria uma nova sessão de chat com o Gemini."""
     model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
+        model_name="gemini-2.0-flash",
         tools=tools,
         system_instruction=SYSTEM_INSTRUCTION,
     )

@@ -20,7 +20,10 @@ if not os.path.exists(MODEL_PATH):
     st.error(f"❌ Arquivo não encontrado! O Python procurou em: {MODEL_PATH}")
     st.stop()
 
-pipeline = joblib.load(MODEL_PATH)
+artefato = joblib.load(MODEL_PATH)
+
+model = artefato["model"]
+threshold = artefato["threshold"]
 
 st.set_page_config(page_title="Previsão de Risco Cardíaco", layout="centered")
 
@@ -62,13 +65,20 @@ with tab_previsao:
     }])
 
     if st.button("🔍 Analisar Risco"):
-        prediction = pipeline.predict(input_df)[0]
+        proba = model.predict_proba(input_df)[:, 1][0]
+        prediction = int(proba >= threshold)
         st.subheader("Resultado da Análise")
-        if prediction == 1:
-            st.error("🔴 Alto risco de doença cardíaca!")
-        else:
-            st.success("🟢 Baixo risco de doença cardíaca.")
 
+        st.write(f"**Risco estimado:** {proba:.2%}")
+
+
+        # classificação mais rica
+        if proba < 0.2:
+            st.info("🟢 Risco baixo")
+        elif proba < 0.5:
+            st.warning("🟡 Risco moderado")
+        else:
+            st.error("🔴 Risco alto")
 # ── ABA 2: CHAT ───────────────────────────────────────────────────────────────
 with tab_chat:
     render_chat()
