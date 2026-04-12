@@ -14,7 +14,7 @@ import os
 
 # Carregar modelo treinado
 BASE_DIR = Path(__file__).resolve().parent.parent  # src/app → src/
-MODEL_PATH = BASE_DIR / "models" / "modelo_cardiaco.pkl"
+MODEL_PATH = BASE_DIR / ".." / "models" / "modelo_cardiaco.pkl"
 
 if not os.path.exists(MODEL_PATH):
     st.error(f"❌ Arquivo não encontrado! O Python procurou em: {MODEL_PATH}")

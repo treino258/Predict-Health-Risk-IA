@@ -36,6 +36,7 @@ dist/
 
 # Jupyter artifacts
 .ipynb_checkpoints/
+*.pkl
 
 # System files
 .DS_Store
