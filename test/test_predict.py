@@ -5,7 +5,7 @@ import joblib
 import os
 
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'src', 'models', 'modelo_cardiaco.pkl')
+MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'modelo_cardiaco.pkl')
 
 
 @pytest.fixture(scope="module")
