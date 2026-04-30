@@ -66,7 +66,6 @@ with tab_previsao:
 
     if st.button("🔍 Analisar Risco"):
         proba = model.predict_proba(input_df)[:, 1][0]
-        prediction = int(proba >= threshold)
         st.subheader("Resultado da Análise")
 
         st.write(f"**Risco estimado:** {proba:.2%}")
