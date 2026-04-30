@@ -4,7 +4,7 @@ import numpy as np
 import os
 
 
-CSV_PATH = os.path.join(os.path.dirname(__file__), '..', 'src', 'DataSet', 'heart.csv')
+CSV_PATH = os.path.join(os.path.dirname(__file__), '..', 'src', 'DataSet', 'heart_cleaned.csv')
 
 COLUNAS_NUMERICAS = ["Age", "RestingBP", "Cholesterol", "FastingBS", "MaxHR", "Oldpeak"]
 COLUNAS_CATEGORICAS = ["Sex", "ChestPainType", "RestingECG", "ExerciseAngina", "ST_Slope"]

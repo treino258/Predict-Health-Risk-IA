@@ -31,6 +31,8 @@ from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from src.app.app import BASE_DIR
+
 warnings.filterwarnings("ignore")
 
 # ── Constantes ────────────────────────────────────────────────────────────────
@@ -49,10 +51,10 @@ TRANSFORMER_NUM = "num"
 TRANSFORMER_CAT = "cat"
 
 PATHS = {
-    "data": Path("DataSet/heart_cleaned.csv"),
-    "models": Path("models"),
-    "images": Path("img"),
-    "model_file": Path("models/modelo_cardiaco.pkl"),
+    "data": BASE_DIR / "DataSet" / "heart_cleaned.csv",
+    "models": BASE_DIR / "models",
+    "images": BASE_DIR / "img",
+    "model_file": BASE_DIR / "models" / "modelo_cardiaco.pkl",
 }
 
 
