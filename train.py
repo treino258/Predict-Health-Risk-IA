@@ -7,6 +7,7 @@ import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
+import yaml
 
 import joblib
 import matplotlib.pyplot as plt
@@ -31,7 +32,7 @@ from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from src.app.app import BASE_DIR
+from src.configs.paths import PATHS, BASE_DIR
 
 warnings.filterwarnings("ignore")
 
@@ -50,27 +51,28 @@ STEP_MODEL = "model"
 TRANSFORMER_NUM = "num"
 TRANSFORMER_CAT = "cat"
 
-PATHS = {
-    "data": BASE_DIR / "DataSet" / "heart_cleaned.csv",
-    "models": BASE_DIR / "models",
-    "images": BASE_DIR / "img",
-    "model_file": BASE_DIR / "models" / "modelo_cardiaco.pkl",
-}
+
 
 
 # ── Configuração ──────────────────────────────────────────────────────────────
 
+
+
 @dataclass
 class Config:
-    test_size: float = 0.2
-    val_size: float = 0.2
-    n_iter_search: int = 20
-    cv_folds: int = 5
-    random_state: int = 42
-    target_sensitivity: float = 0.95
+    test_size: float
+    val_size: float
+    n_iter_search: int
+    cv_folds: int
+    random_state: int
+    target_sensitivity: float
 
-
+def load_config() -> Config:
+    with open(PATHS["config"], "r") as f:
+        data = yaml.safe_load(f)
+    return Config(**data)
 # ── Carregamento e validação dos dados ───────────────────────────────────────
+
 
 def load_data(path: Path) -> pd.DataFrame:
     """Carrega o CSV e valida que as colunas esperadas existem."""
@@ -445,7 +447,8 @@ def load_model(path: Path) -> tuple:
 # ── Execução principal ────────────────────────────────────────────────────────
 
 def main():
-    config = Config()
+    
+    config = load_config()
 
     # Diretórios de saída
     PATHS["models"].mkdir(parents=True, exist_ok=True)
