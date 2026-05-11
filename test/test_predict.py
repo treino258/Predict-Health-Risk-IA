@@ -3,9 +3,10 @@ import pandas as pd
 import numpy as np
 import joblib
 import os
+from src.configs.paths import PATHS
 
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'modelo_cardiaco.pkl')
+MODEL_PATH = PATHS["model_file"]
 
 
 @pytest.fixture(scope="module")

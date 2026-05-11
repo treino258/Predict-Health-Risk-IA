@@ -1,8 +1,10 @@
 import os
 import pandas as pd
 import pytest
+from src.configs.paths import PATHS
 
-CSV_PATH = os.path.join(os.path.dirname(__file__), '..', 'src', 'DataSet', 'heart_cleaned.csv')
+
+CSV_PATH = PATHS["dataset"]
 
 COLUNAS_ESPERADAS = [
     "Age", "Sex", "ChestPainType", "RestingBP", "Cholesterol",

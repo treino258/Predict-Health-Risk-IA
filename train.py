@@ -4,9 +4,8 @@
 
 import os
 import warnings
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 import yaml
 
 import joblib
@@ -32,7 +31,7 @@ from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from src.configs.paths import PATHS, BASE_DIR
+from src.configs.paths import PATHS
 
 warnings.filterwarnings("ignore")
 
