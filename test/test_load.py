@@ -4,7 +4,7 @@ import pytest
 from src.configs.paths import PATHS
 
 
-CSV_PATH = PATHS["dataset"]
+CSV_PATH = PATHS["data"]
 
 COLUNAS_ESPERADAS = [
     "Age", "Sex", "ChestPainType", "RestingBP", "Cholesterol",

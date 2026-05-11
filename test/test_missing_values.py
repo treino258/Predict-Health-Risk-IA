@@ -5,7 +5,7 @@ import os
 from src.configs.paths import PATHS
 
 
-CSV_PATH = PATHS["dataset"]
+CSV_PATH = PATHS["data"]
 
 COLUNAS_NUMERICAS = ["Age", "RestingBP", "Cholesterol", "FastingBS", "MaxHR", "Oldpeak"]
 COLUNAS_CATEGORICAS = ["Sex", "ChestPainType", "RestingECG", "ExerciseAngina", "ST_Slope"]
