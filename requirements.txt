@@ -6,6 +6,7 @@ scikit-learn==1.5.2
 scipy==1.11.4
 joblib==1.4.2
 shap==0.49.1
+PyYAML==6.0.3
 
 # Visualização (opcional)
 matplotlib==3.8.4
