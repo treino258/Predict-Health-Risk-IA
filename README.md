@@ -218,16 +218,28 @@ The assistant uses Google's Gemini API and integrates directly with the trained 
 ├── model.ipynb              # Notebook de treinamento e avaliação
 ├── launcher.py              # Inicializador da aplicação
 ├── requirements.txt         # Dependências
+├── pyproject.toml           # 
 ├── models/                  # Gerado pelo train.py — ignorado pelo Git
 │   └── modelo_cardiaco.pkl
 └── src/
+    ├── Data-Analysis.ipynb  # 
+    ├── model.ipynb
     ├── app/
     │    └── app.py
     ├── DataSet/
-    │    └── heart_cleaned.csv        # Dataset
-    └── img/
-        
-```
+    │    └── heart_cleaned.csv        # Dataset 
+    ├── Configs/
+    │    ├──  paths.py
+    │    └──  train.yaml
+    ├── img/
+    ├── llm/  
+    │    ├── chat_tab.py
+    │    ├── client.py
+    │    └── tools.py
+    ├── models/
+         └── modelo_cardiaco.pkl
+
+```    
 
 ---
 
