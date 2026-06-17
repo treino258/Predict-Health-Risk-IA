@@ -16,9 +16,12 @@ import pandas as pd
 
 st.set_page_config(page_title="Previsão de Risco Cardíaco", layout="centered")
 
+@st.cache_resource
+def carregar_modelo():
+    return _load_model()
 
 def main():
-    artefato = _load_model()
+    artefato = carregar_modelo()
     model = artefato["model"]
     threshold = artefato["threshold"]
 
