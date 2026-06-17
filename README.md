@@ -7,9 +7,9 @@
 
 # 🫀 Predict Health Risk IA
 
-> Ferramenta de triagem de risco cardíaco com Machine Learning — do dado clínico à predição em tempo real.
+> A cardiac risk screening tool using Machine Learning—from clinical data to real-time prediction.
 
-📌 Este projeto tem caráter educacional e demonstra boas práticas de Machine Learning, incluindo validação adequada, ajuste de threshold e calibração de probabilidades. Para uso em produção clínica, seriam necessários validação externa, aprovação regulatória e integração com especialistas da área da saúde.
+📌 This project is for educational purposes and demonstrates Machine Learning best practices, including proper validation, threshold adjustment, and probability calibration. For use in clinical production, external validation, regulatory approval, and integration with healthcare professionals would be required.
 
 ![Interface](src/img/image.png)
 
@@ -21,52 +21,52 @@
 
 ## 🎯 Business Goal
 
-Doenças cardiovasculares são a principal causa de morte no mundo. O diagnóstico precoce depende de profissionais especializados e exames que nem sempre são acessíveis. Este projeto cria uma ferramenta de triagem inteligente que auxilia na identificação de pacientes em alto risco cardíaco com base em dados clínicos simples — democratizando um primeiro nível de avaliação preventiva.
+Cardiovascular diseases are the leading cause of death worldwide. Early diagnosis depends on specialized professionals and tests that are not always accessible. This project creates an intelligent screening tool that assists in identifying patients at high cardiac risk based on simple clinical data—democratizing a first level of preventive assessment.
 
-> ⚠️ **Aviso:** Esta ferramenta é um apoio à triagem, não substitui diagnóstico médico profissional.
+> ⚠️ **Warning:** This tool is a screening aid and does not replace professional medical diagnosis.
 
 ---
 
 ## 💡 Solution & Impact
 
-Modelo de classificação binária (**Alto Risco / Baixo Risco**) treinado com dados clínicos reais, validado com cross-validation de 5 folds e otimizado via `RandomizedSearchCV` com foco em **recall** — minimizando falsos negativos, que representam o erro de maior impacto clínico na saúde.
+A binary classification model (**High Risk / Low Risk**) trained with real clinical data, validated with 5-fold cross-validation, and optimized via `RandomizedSearchCV` with a focus on **recall** — minimizing false negatives, which represent the error with the highest clinical impact in healthcare.
 
-Entregue como aplicação web via **Streamlit**, permitindo que qualquer pessoa insira dados clínicos e receba uma predição instantânea, sem necessidade de infraestrutura técnica.
+Delivered as a web application via **Streamlit**, allowing anyone to enter clinical data and receive an instant prediction, without the need for technical infrastructure.
 
 ---
 
-## 🔍 Análise Exploratória dos Dados (EDA)
+## 🔍 Exploratory Data Analysis (EDA)
 
-Antes de modelar, os dados foram investigados em profundidade para garantir qualidade e extrair insights clínicos.
+Before modeling, the data was thoroughly investigated to ensure quality and extract clinical insights.
 
-**Qualidade dos dados**
-172 pacientes apresentavam Colesterol = 0 — biologicamente impossível. Esses valores foram tratados como ausentes e substituídos pela mediana do grupo (doente/saudável), preservando o padrão clínico de cada classe.
+**Data Quality**
+172 patients had Cholesterol = 0—biologically impossible. These values were treated as missing and replaced by the group median (sick/healthy), preserving the clinical pattern of each class.
 
-**Principais descobertas**
-               (mediana)    (mediana)
-| Variável   | Saudável  |    Doença   |  Diferença |
+**Key Findings**
+               (Median)    (Median)
+| Variable   | Healthy  |    Disease   |  Difference |
 |------------|-----------|-------------|------------|
-| Idade      | 51 anos   | 57 anos     | +11.8%     |
+| Age      | 51 years   | 57 years     | +11.8%     |
 | MaxHR      | 150 bpm   | 126 bpm     | **-16.0%** |
-| Colesterol | 231 mg/dL | 246 mg/dL   | +6.3%      |
+| Cholesterol | 231 mg/dL | 246 mg/dL   | +6.3%      |
 | Oldpeak    | 0.0 | 1.2 | **↑ forte** |            
 | RestingBP  | 130 mmHg  | 132 mmHg    | +1.5%      |
 
-**Insights clínicos extraídos:**
+**Clinical insights extracted:**
 
-- **Oldpeak** é o indicador mais discriminante — pacientes doentes têm depressão do segmento ST significativamente maior, consistente com a literatura cardiológica
-- **MaxHR** inversamente associado à doença — frequência cardíaca máxima mais baixa indica menor capacidade funcional cardíaca
-- **FastingBS** (glicemia em jejum > 120) aparece quase exclusivamente em pacientes doentes, sugerindo forte associação com risco metabólico-cardiovascular
-- **Colesterol** apresenta alta variabilidade e outliers expressivos — variável ruidosa que exigiu tratamento cuidadoso
-- **Idade** média dos doentes é 6 anos superior, reforçando o risco crescente com o envelhecimento
+- **Oldpeak** is the most discriminating indicator—sick patients have significantly higher ST-segment depression, consistent with cardiological literature.
+- **MaxHR** is inversely associated with the disease—a lower maximum heart rate indicates lower cardiac functional capacity.
+- **FastingBS** (> 120) appears almost exclusively in sick patients, suggesting a strong association with metabolic-cardiovascular risk.
+- **Cholesterol** shows high variability and significant outliers—noisy variable that required careful treatment.
+- **Idade** is 6 years higher on average for sick patients, reinforcing the increasing risk with aging.
 
 ---
 
-## 📊 Resultados do Modelo
+## 📊 Model Results
 
-| Métrica | Valor |
+| Metric | Value |
 |---------|-------|
-| Acurácia | 88.0% |
+| Accuracy | 88.0% |
 | Recall — Alto Risco (classe 1) | **89,47%** |
 | Specificity — Baixo Risco (classe 0) | **87,10%** |
 | Precision — Alto Risco (classe 1) | 89,47% |
@@ -77,102 +77,103 @@ Antes de modelar, os dados foram investigados em profundidade para garantir qual
 
 **Confusion Matrix:**
 ```
-[[54  8]   → 54 saudáveis corretos | 8 falsos positivos
- [ 8  68]]  → 8 falsos negativos    | 68 doentes corretos
+[[54  8]   → 54 correct healthy | 8 false positives
+ [ 8  68]]  → 8 false negatives    | 68 correct disease
 ```
 
-O modelo identifica corretamente **89,47% dos pacientes com risco cardíaco real** — o falso negativo (doente classificado como saudável) é o erro mais perigoso na saúde e foi o critério principal de otimização. A Specificity de 87.10% indica que o modelo também evita alarmar pacientes saudáveis desnecessariamente.
+The model correctly identifies **89.47% of patients with real cardiac risk—false negatives (sick classified as healthy)** are the most dangerous error in healthcare and were the main optimization criterion. The Specificity of 87.10% indicates that the model also avoids unnecessarily alarming healthy patients.
 
 ---
 
-## 🧠 Decisões Técnicas
+## 🧠 Technical Decisions
 
-**Por que separar os dados em três conjuntos?**
+**Why separate data into three sets?**
 
-A divisão clássica treino/teste em duas partes cria um problema sutil: se o threshold é ajustado usando o conjunto de teste, os resultados reportados são otimistas e não refletem o desempenho real em dados novos — isso se chama data leakage.
+The classic train/test split creates a subtle problem: if the threshold is adjusted using the test set, the reported results are optimistic and do not reflect real performance on new data—this is called data leakage.
 
-Neste projeto, os dados foram divididos em três partes:
+In this project, data was divided into three parts:
 
 ```
-918 pacientes (100%)
-├── Treino  (70%) → treina o modelo e os hiperparâmetros
-├── Validação (15%) → ajusta o threshold aqui, sem tocar no teste
-└── Teste (15%) → reporta o resultado final, tocado uma única vez
+918 patients (100%)
+├── Train  (70%) → trains the model and hyperparameters
+├── Validation (15%) → adjusts the threshold here, without touching the test set
+└── Test (15%) → reports the final result, touched only once
 ```
 
-Cada conjunto tem uma única responsabilidade. O threshold foi escolhido na validação, e o teste foi usado apenas para reportar o número final — garantindo uma estimativa honesta do desempenho real.
+Each set has a single responsibility. The threshold was chosen in validation, and the test was used only to report the final number—ensuring an honest estimate of real performance.
 
-**Por que Recall como métrica principal?**
+**Why Recall as the main metric
 
-Em triagem cardíaca, os dois tipos de erro têm custos assimétricos:
+In cardiac screening, the two types of errors have asymmetric costs:
 
-- Falso Negativo (alto risco classificado como baixo): paciente não recebe atenção médica → consequência potencialmente fatal
-- Falso Positivo (baixo risco classificado como alto): paciente faz exames desnecessários → custo controlável
+- False Negative (high risk classified as low): patient does not receive medical attention → potentially fatal consequence.
+- False Positive (low risk classified as high): patient undergoes unnecessary tests → controllable cost.
 
-Por isso, minimizar Falsos Negativos é prioridade. O Recall mede exatamente isso: dos pacientes que realmente têm alto risco, quantos o modelo identifica corretamente?
+Therefore, minimizing False Negatives is a priority. Recall measures exactly this: of the patients who are actually at high risk, how many does the model correctly identify?
 
-Acurácia seria uma métrica enganosa aqui — com dataset desbalanceado, um modelo que classifica tudo como "baixo risco" pode ter acurácia alta e Recall zero.
+Accuracy would be a misleading metric here—with an imbalanced dataset, a model that classifies everything as "low risk" could have high accuracy and zero Recall.
 
-**Por que RandomForestClassifier?**
+**Why RandomForestClassifier?**
 
-Três razões práticas para esse problema:
+Three practical reasons for this problem:
 
-- **Interpretabilidade:** fornece `feature_importances_`, permitindo entender quais variáveis clínicas mais influenciam o risco — essencial em contexto médico
-- **Robustez a outliers:** dados clínicos têm ruído natural (ex: 172 registros de colesterol inconsistentes tratados via imputação por mediana)
-- **Desempenho sem escalonamento:** diferente de SVM ou KNN, não exige normalização das features, simplificando o pipeline de inferência
+- **Interpretability:** provides `feature_importances_`, allowing us to understand which clinical variables most influence risk—essential in a medical context.
+- **Robustness to outliers:** clinical data has natural noise (e.g., 172 inconsistent cholesterol records treated via median imputation).
+- **Performance without scaling:** unlike SVM or KNN, it does not require feature normalization, simplifying the inference pipeline.
 
-**Por que imputação por mediana no colesterol?**
+**Why median imputation for cholesterol?**
 
-172 registros apresentavam colesterol = 0, valor clinicamente impossível. Duas opções foram consideradas:
+172 records had cholesterol = 0, a clinically impossible value. Two options were considered:
 
-- Remover os registros: perderia ~18% do dataset — impacto significativo para um modelo de saúde
-- Imputar pela mediana: preserva os dados e é robusto a outliers, ao contrário da média
+- Remove the records: ~18% of the dataset would be lost—significant impact for a health model.
 
-A mediana foi escolhida por ser menos sensível aos valores extremos presentes na distribuição de colesterol.
+- Impute by median: preserves data and is robust to outliers, unlike the mean.
 
-**Por que validação cruzada (5-fold) além do train_test_split?**
+The median was chosen because it is less sensitive to extreme values present in the cholesterol distribution.
 
-O `train_test_split` avalia o modelo em uma única divisão — resultado dependente do acaso da partição. A validação cruzada com 5 folds garante que todo dado foi usado tanto para treino quanto para teste, produzindo uma estimativa mais confiável da capacidade de generalização do modelo.
+**Why 5-fold cross-validation in addition to train_test_split?**
 
-**Por que calibrar probabilidades (CalibratedClassifierCV)?**
+`train_test_split` evaluates the model on a single partition—a result dependent on the luck of the draw. 5-fold cross-validation ensures that every data point was used for both training and testing, producing a more reliable estimate of the model's generalization capacity.
 
-Modelos baseados em árvores, como RandomForest, frequentemente produzem probabilidades mal calibradas — ou seja, o valor retornado por `predict_proba` não representa corretamente a probabilidade real do evento. Isso impacta diretamente o uso de threshold, pois decisões baseadas em probabilidades imprecisas podem ser inconsistentes.
+**Why calibrate probabilities (CalibratedClassifierCV)?**
 
-**Por que ajuste de threshold na decisão final?**
+Tree-based models, like RandomForest, often produce poorly calibrated probabilities—meaning the value returned by `predict_proba` does not correctly represent the true probability of the event. This directly impacts the use of thresholds, as decisions based on inaccurate probabilities can be inconsistent.
 
-Por padrão, modelos de classificação utilizam um threshold fixo de 0.5 para converter probabilidades em classes. No entanto, esse valor é arbitrário e nem sempre adequado para problemas reais.
+**Why adjust the threshold for the final decision?**
 
-Neste projeto, o threshold foi ajustado buscando o maior valor de Specificity que ainda mantivesse Recall ≥ 95% — feito exclusivamente no conjunto de validação, sem qualquer contato com o conjunto de teste.
+By default, classification models use a fixed threshold of 0.5 to convert probabilities into classes. However, this value is arbitrary and not always suitable for real-world problems.
+
+In this project, the threshold was adjusted seeking the highest Specificity value that still maintained Recall ≥ 95%—done exclusively in the validation set, without any contact with the test set.
 
 ---
 
-## ⚠️ Limitações do Modelo
+## ⚠️ Model Limitations
 
-Apesar dos bons resultados, este modelo possui limitações importantes que devem ser consideradas antes de uso em ambiente real:
+Despite the good results, this model has important limitations that must be considered before use in a real environment:
 
-**1. Dataset limitado e potencialmente enviesado**
+**1. Limited and potentially biased dataset**
 
-O modelo foi treinado em um dataset específico, que pode não representar toda a população. Pode haver viés em relação a idade, gênero e perfil clínico. O modelo pode não generalizar bem para outros contextos (hospitais, países, etc.)
+The model was trained on a specific dataset, which may not represent the entire population. There may be bias regarding age, gender, and clinical profile. The model may not generalize well to other contexts (hospitals, countries, etc.).
 
-**2. Não substitui diagnóstico médico**
+**2. Does not replace medical diagnosis**
 
-O modelo é uma ferramenta de triagem, não de diagnóstico. Não considera contexto clínico completo, não substitui exames ou avaliação profissional, e deve ser usado apenas como apoio à decisão.
+The model is a screening tool, not a diagnostic one. It does not consider the complete clinical context, does not replace exams or professional evaluation, and should be used only as decision support.
 
-**3. Sensibilidade vs Precisão (trade-off)**
+**3. Sensitivity vs. Precision (trade-off)**
 
-O modelo foi otimizado para recall, priorizando a detecção de pacientes de alto risco. Isso reduz falsos negativos (casos graves não detectados), mas pode gerar maior carga operacional em um ambiente real por aumentar falsos positivos.
+The model was optimized for recall, prioritizing the detection of high-risk patients. This reduces false negatives (serious cases not detected), but may create a higher operational burden in a real environment by increasing false positives.
 
-**4. Dependência de qualidade dos dados de entrada**
+**4. Dependency on input data quality**
 
-O desempenho do modelo depende diretamente da qualidade dos dados fornecidos. Erros de input ou dados incompletos podem gerar previsões incorretas.
+Model performance depends directly on the quality of the data provided. Input errors or incomplete data can generate incorrect predictions.
 
-**5. Modelo estático (não aprende em produção)**
+**5. Static model (does not learn in production)**
 
-O modelo atual não se atualiza automaticamente nem aprende com novos dados. Para uso real, seria necessário monitoramento contínuo e re-treinamento periódico.
+The current model does not update automatically or learn from new data. For real use, continuous monitoring and periodic re-training would be necessary.
 
-**6. Interpretabilidade limitada**
+**6. Limited interpretability**
 
-Apesar do uso de Random Forest, o modelo não explica diretamente o "porquê" de cada decisão individual. Em aplicações críticas, técnicas como SHAP poderiam complementar a interpretabilidade.
+Despite the use of Random Forest, the model does not directly explain the "why" of each individual decision. In critical applications, techniques like SHAP could complement interpretability.
 
 ---
 
@@ -214,25 +215,25 @@ The assistant uses Google's Gemini API and integrates directly with the trained 
 
 ## 📁 Estrutura do Projeto
 ```
-├── train.py                 # Treina o modelo do zero (execute antes do app)
-├── model.ipynb              # Notebook de treinamento e avaliação
-├── launcher.py              # Inicializador da aplicação
-├── requirements.txt         # Dependências
-├── pyproject.toml           # 
-├── models/                  # Gerado pelo train.py — ignorado pelo Git
+├── train.py                     # Treina o modelo do zero (execute antes do app)
+├── model.ipynb                  # Notebook de treinamento e avaliação
+├── launcher.py                  # Inicializador da aplicação
+├── requirements.txt             # Dependências
+├── pyproject.toml            
+├── models/                      # Gerado pelo train.py — ignorado pelo Git
 │   └── modelo_cardiaco.pkl
 └── src/
-    ├── Data-Analysis.ipynb  # 
+    ├── Data-Analysis.ipynb  
     ├── model.ipynb
     ├── app/
-    │    └── app.py
+    │    └── app.py              # Streamlit app
     ├── DataSet/
-    │    └── heart_cleaned.csv        # Dataset 
+    │    └── heart_cleaned.csv   # Dataset 
     ├── Configs/
     │    ├──  paths.py
     │    └──  train.yaml
-    ├── img/
-    ├── llm/  
+    ├── img/                     # Images for documentation
+    ├── llm/                     # Gemini integration
     │    ├── chat_tab.py
     │    ├── client.py
     │    └── tools.py
@@ -245,7 +246,7 @@ The assistant uses Google's Gemini API and integrates directly with the trained 
 
 ## 📦 Dataset
 
-Dataset público do Kaggle com 918 registros de pacientes e 11 variáveis clínicas:
+Public Kaggle dataset with 918 patient records and 11 clinical variables:
 
 `Age` · `Sex` · `ChestPainType` · `RestingBP` · `Cholesterol` · `FastingBS` · `RestingECG` · `MaxHR` · `ExerciseAngina` · `Oldpeak` · `ST_Slope`
 
@@ -256,17 +257,17 @@ Dataset público do Kaggle com 918 registros de pacientes e 11 variáveis clíni
 ## ▶️ Run Locally
 
 ```bash
-# 1. Clone o repositório
+# 1. Clone the repository
 git clone https://github.com/treino258/Predict-Health-Risk-IA.git
 cd Predict-Health-Risk-IA
 
-# 2. Instale as dependências
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. Treine o modelo
+# 3. Train the model
 python train.py
 
-# 4. Execute a aplicação
+# 4. Run the application
 python launcher.py
 ```
 
