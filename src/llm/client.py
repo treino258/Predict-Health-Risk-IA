@@ -1,6 +1,6 @@
 import os
 import google.generativeai as genai
-from src.llm.tools import get_feature_importance, predict_risk, get_model_metrics
+from llm.tools import get_feature_importance, predict_risk, get_model_metrics
 
 # Configure Gemini
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
