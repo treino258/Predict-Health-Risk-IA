@@ -7,6 +7,6 @@ PATHS = {
     "data": SRC_DIR  / "DataSet" / "heart_cleaned.csv",
     "models": SRC_DIR / "models",
     "images": BASE_DIR  / "img",
-    "model_file": "models" / "modelo_cardiaco.pkl",
+    "model_file": SRC_DIR / "models" / "modelo_cardiaco.pkl",
     "config": SRC_DIR  / "configs" / "train.yaml",
 }
