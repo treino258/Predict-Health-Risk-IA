@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import joblib
 import os
-from src.configs.paths import PATHS
+from configs.paths import PATHS
 
 
 MODEL_PATH = PATHS["model_file"]

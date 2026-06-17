@@ -1,8 +1,8 @@
 import pytest
 import pandas as pd
 import numpy as np
-import os
-from src.configs.paths import PATHS
+
+from configs.paths import PATHS
 
 
 CSV_PATH = PATHS["data"]
