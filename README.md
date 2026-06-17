@@ -39,14 +39,14 @@ Antes de modelar, os dados foram investigados em profundidade para garantir qual
 172 pacientes apresentavam Colesterol = 0 — biologicamente impossível. Esses valores foram tratados como ausentes e substituídos pela mediana do grupo (doente/saudável), preservando o padrão clínico de cada classe.
 
 **Principais descobertas**
-
-| Variável | Saudável (mediana) | Doença (mediana) | Diferença |
-|---|---|---|---|
-| Idade | 51 anos | 57 anos | +11.8% |
-| MaxHR | 150 bpm | 126 bpm | **-16.0%** |
-| Colesterol | 231 mg/dL | 246 mg/dL | +6.3% |
-| Oldpeak | 0.0 | 1.2 | **↑ forte** |
-| RestingBP | 130 mmHg | 132 mmHg | +1.5% |
+               (mediana)    (mediana)
+| Variável   | Saudável  |    Doença   |  Diferença |
+|------------|-----------|-------------|------------|
+| Idade      | 51 anos   | 57 anos     | +11.8%     |
+| MaxHR      | 150 bpm   | 126 bpm     | **-16.0%** |
+| Colesterol | 231 mg/dL | 246 mg/dL   | +6.3%      |
+| Oldpeak    | 0.0 | 1.2 | **↑ forte** |            
+| RestingBP  | 130 mmHg  | 132 mmHg    | +1.5%      |
 
 **Insights clínicos extraídos:**
 
@@ -61,7 +61,7 @@ Antes de modelar, os dados foram investigados em profundidade para garantir qual
 ## 📊 Resultados do Modelo
 
 | Métrica | Valor |
-|---|---|
+|---------|-------|
 | Acurácia | 88.0% |
 | Recall — Alto Risco (classe 1) | **89,47%** |
 | Specificity — Baixo Risco (classe 0) | **87,10%** |
