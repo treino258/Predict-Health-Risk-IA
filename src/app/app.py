@@ -14,7 +14,7 @@ import joblib
 import os
 
 # Carregar modelo treinado
-
+@st.cache_resource
 def load_model():
     if not PATHS["model_file"].exists():
         raise FileNotFoundError("Modelo ainda não foi treinado")
