@@ -15,8 +15,7 @@ import pandas as pd
 
 
 st.set_page_config(page_title="Previsão de Risco Cardíaco", layout="centered")
-# Carregar modelo treinado
-@st.cache_resource
+
 
 def main():
     artefato = _load_model()
