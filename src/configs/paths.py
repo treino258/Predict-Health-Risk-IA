@@ -1,6 +1,6 @@
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parents[1]
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 PATHS = {
     "data": BASE_DIR  / "DataSet" / "heart_cleaned.csv",
