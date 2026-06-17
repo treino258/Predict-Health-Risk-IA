@@ -3,12 +3,10 @@ import pandas as pd
 import numpy as np
 import os
 from configs.model_features import get_feature_names, STEP_MODEL
+from configs.paths import MODEL_PATH
 
 # Caminho do modelo treinado
-MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'src', 'models', 'modelo_cardiaco.pkl')
 
-COLUNAS_NUMERICAS = ["Age", "RestingBP", "Cholesterol", "FastingBS", "MaxHR", "Oldpeak"]
-COLUNAS_CATEGORICAS = ["Sex", "ChestPainType", "RestingECG", "ExerciseAngina", "ST_Slope"]
 
 
 def _load_model():

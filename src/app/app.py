@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from llm.tools import MODEL_PATH, _load_model
+from llm.tools import _load_model
 
 
 from dotenv import load_dotenv
@@ -12,8 +12,7 @@ from llm.chat_tab import render_chat
 from configs.paths import PATHS
 import streamlit as st
 import pandas as pd
-import joblib
-import os
+
 
 st.set_page_config(page_title="Previsão de Risco Cardíaco", layout="centered")
 # Carregar modelo treinado
