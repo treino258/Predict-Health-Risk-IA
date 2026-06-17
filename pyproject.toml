@@ -1,5 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Predict_Healt_risk" 
+version = "0.1.0"
+dependencies = [] # Opcional: pode manter no requirements.txt por enquanto
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [tool.pytest.ini_options]
-pythonpath = ["."]
 testpaths = ["test"]
 
 [tool.black]

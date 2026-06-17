@@ -1,6 +1,6 @@
 
 import streamlit as st
-from llm.client import create_chat, send_message
+from src.llm.client import create_chat, send_message
 
 
 def render_chat():

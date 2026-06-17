@@ -2,13 +2,13 @@
 import sys
 from pathlib import Path
 
-from llm.tools import MODEL_PATH, _load_model
+from src.llm.tools import MODEL_PATH, _load_model
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=Path(__file__).resolve().parent.parent.parent / ".env")
 
-from llm.chat_tab import render_chat
+from src.llm.chat_tab import render_chat
 from src.configs.paths import PATHS
 import streamlit as st
 import pandas as pd
