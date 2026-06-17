@@ -2,7 +2,7 @@ import joblib
 import pandas as pd
 import numpy as np
 import os
-from train import get_feature_names, STEP_MODEL
+from configs.model_features import get_feature_names, STEP_MODEL
 
 # Caminho do modelo treinado
 MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'src', 'models', 'modelo_cardiaco.pkl')

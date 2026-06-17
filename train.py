@@ -33,22 +33,10 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from src.configs.paths import PATHS
 
+from src.configs.model_features import TARGET, NUMERICAL_COLS, CATEGORICAL_COLS, STEP_MODEL, STEP_PREPROCESSOR, TRANSFORMER_CAT, TRANSFORMER_NUM
+
 warnings.filterwarnings("ignore")
 
-# ── Constantes ────────────────────────────────────────────────────────────────
-# Centralizar aqui evita erros de digitação espalhados pelo código
-
-TARGET = "HeartDisease"
-
-NUMERICAL_COLS = ["Age", "RestingBP", "Cholesterol", "FastingBS", "MaxHR", "Oldpeak"]
-CATEGORICAL_COLS = ["Sex", "ChestPainType", "RestingECG", "ExerciseAngina", "ST_Slope"]
-
-# Nomes dos steps do pipeline — mudar aqui muda em todo lugar
-STEP_PREPROCESSOR = "preprocessor"
-STEP_MODEL = "model"
-
-TRANSFORMER_NUM = "num"
-TRANSFORMER_CAT = "cat"
 
 
 

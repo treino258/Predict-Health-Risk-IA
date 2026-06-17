@@ -1,9 +1,9 @@
 # app.py - Interface com Streamlit para previsão de risco cardíaco
-import sys
+
 from pathlib import Path
 
 from llm.tools import MODEL_PATH, _load_model
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
 
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=Path(__file__).resolve().parent.parent.parent / ".env")
