@@ -3,11 +3,11 @@ import pandas as pd
 import numpy as np
 import os
 from configs.model_features import get_feature_names, STEP_MODEL
-from configs.paths import MODEL_PATH
+from configs.paths import PATHS
 
 # Caminho do modelo treinado
 
-
+MODEL_PATH = PATHS["model_file"]
 
 def _load_model():
     """Carrega o modelo treinado."""

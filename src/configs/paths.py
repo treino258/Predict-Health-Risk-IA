@@ -1,18 +1,12 @@
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+SRC_DIR = BASE_DIR / "src"
 
 PATHS = {
-    "data": BASE_DIR  / "DataSet" / "heart_cleaned.csv",
-    "models": BASE_DIR  / "models",
+    "data": SRC_DIR  / "DataSet" / "heart_cleaned.csv",
+    "models": SRC_DIR / "models",
     "images": BASE_DIR  / "img",
-    "model_file": BASE_DIR  / "models" / "modelo_cardiaco.pkl",
-    "config": BASE_DIR  / "configs" / "train.yaml",
-
+    "model_file": "models" / "modelo_cardiaco.pkl",
+    "config": SRC_DIR  / "configs" / "train.yaml",
 }
-
-DATA = BASE_DIR  / "DataSet" / "heart_cleaned.csv",
-MODELS = BASE_DIR  / "models",
-IMGS = BASE_DIR  / "img",
-MODEL_PATH = BASE_DIR  / "models" / "modelo_cardiaco.pkl",
-CONFIG = BASE_DIR  / "configs" / "train.yaml",
