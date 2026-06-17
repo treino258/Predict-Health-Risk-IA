@@ -75,7 +75,11 @@ def _process_message(user_input: str):
 
     # Obtém resposta do Gemini
     with st.spinner("Consultando o modelo..."):
-        response = send_message(st.session_state.chat_session, user_input)
+        try:
+            response = send_message(st.session_state.chat_session, user_input)
+        except Exception as e:
+            st.error(f"Erro ao processar mensagem: {str(e)}")
+            st.stop()
 
     # Adiciona resposta do assistente
     st.session_state.messages.append({

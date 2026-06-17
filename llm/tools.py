@@ -2,6 +2,7 @@ import joblib
 import pandas as pd
 import numpy as np
 import os
+from train import get_feature_names, STEP_MODEL
 
 # Caminho do modelo treinado
 MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'src', 'models', 'modelo_cardiaco.pkl')
@@ -22,30 +23,40 @@ def get_feature_importance() -> str:
     quais fatores mais influenciam o risco cardíaco.
     """
     try:
-        pipeline = _load_model()
-        rf_model = pipeline.named_steps['modelo']
-        preprocessor = pipeline.named_steps['preprocessamento']
+        artefato = _load_model()
 
-        feature_names = COLUNAS_NUMERICAS + list(
-            preprocessor.named_transformers_['cat']
-            .get_feature_names_out(COLUNAS_CATEGORICAS)
-        )
+        calibrated_model = artefato["model"]
+
+        pipeline = calibrated_model.estimator
+
+        feature_names = get_feature_names(pipeline)
+
+        rf_model = pipeline.named_steps[STEP_MODEL]
 
         importances = rf_model.feature_importances_
-        feature_df = pd.DataFrame({
-            'variavel': feature_names,
-            'importancia': importances
-        }).sort_values('importancia', ascending=False).head(8)
+
+        feature_df = (
+            pd.DataFrame({
+                "variavel": feature_names,
+                "importancia": importances
+            })
+            .sort_values("importancia", ascending=False)
+            .head(8)
+        )
 
         result = "Top 8 variáveis mais importantes para o risco cardíaco:\n\n"
+
         for _, row in feature_df.iterrows():
-            bar = "█" * int(row['importancia'] * 50)
-            result += f"• {row['variavel']}: {row['importancia']:.3f} {bar}\n"
+            bar = "█" * int(row["importancia"] * 50)
+
+            result += (
+                f"• {row['variavel']}: "
+                f"{row['importancia']:.3f} {bar}\n"
+            )
 
         return result
     except Exception as e:
-        return f"Erro ao carregar importância das features: {str(e)}"
-
+        return f"Erro ao carregar importância das features: {e}"
 
 def predict_risk(
     age: int,
@@ -79,7 +90,9 @@ def predict_risk(
     - st_slope: inclinação do segmento ST — 'Up', 'Flat', 'Down'
     """
     try:
-        pipeline = _load_model()
+        artefato = _load_model()
+        pipeline = artefato["model"]
+        threshold = artefato["threshold"]
 
         patient_data = pd.DataFrame([{
             "Age": age,
@@ -95,16 +108,24 @@ def predict_risk(
             "ST_Slope": st_slope
         }])
 
-        prediction = pipeline.predict(patient_data)[0]
+        
         probability = pipeline.predict_proba(patient_data)[0]
 
-        prob_high = probability[1] * 100
-        prob_low = probability[0] * 100
+        prob_high = probability[1]
+        prob_low = probability[0]
+
+        prediction = (
+            1 if prob_high >= threshold
+            else 0
+        )
+
+        prob_high_pct = prob_high * 100
+        prob_low_pct = prob_low * 100
 
         result = f"**Resultado da Predição:**\n\n"
         result += f"• Classificação: {'⚠️ ALTO RISCO' if prediction == 1 else '✅ BAIXO RISCO'}\n"
-        result += f"• Probabilidade de doença cardíaca: {prob_high:.1f}%\n"
-        result += f"• Probabilidade de saudável: {prob_low:.1f}%\n\n"
+        result += f"• Probabilidade de doença cardíaca: {prob_high_pct:.1f}%\n"
+        result += f"• Probabilidade de saudável: {prob_low_pct:.1f}%\n\n"
         result += f"Dados analisados: Paciente de {age} anos, sexo {'masculino' if sex == 'M' else 'feminino'}, "
         result += f"dor no peito tipo {chest_pain_type}, colesterol {cholesterol} mg/dL, "
         result += f"frequência cardíaca máxima {max_hr} bpm.\n\n"
@@ -113,6 +134,7 @@ def predict_risk(
         return result
     except Exception as e:
         return f"Erro ao realizar predição: {str(e)}"
+        
 
 
 def get_model_metrics() -> str:

@@ -1,4 +1,4 @@
-![status](https://img.shields.io/badge/status-stable-brightgreen)  ![python](https://img.shields.io/badge/python-3.10%2B-blue)
+![status](https://img.shields.io/badge/status-stable-brightgreen)  ![python](https://img.shields.io/badge/python-3.11-blue)
  
 ![tests](https://img.shields.io/badge/tests-pytest-blue) ![license](https://img.shields.io/badge/license-MIT-lightgrey)
   
@@ -15,6 +15,10 @@
 
 ---
 
+## 🚀 Live Demo
+
+🔗 https://predict-health-risk-ia-vitor-albuquerque.streamlit.app/
+
 ## 🎯 Business Goal
 
 Doenças cardiovasculares são a principal causa de morte no mundo. O diagnóstico precoce depende de profissionais especializados e exames que nem sempre são acessíveis. Este projeto cria uma ferramenta de triagem inteligente que auxilia na identificação de pacientes em alto risco cardíaco com base em dados clínicos simples — democratizando um primeiro nível de avaliação preventiva.
@@ -23,7 +27,7 @@ Doenças cardiovasculares são a principal causa de morte no mundo. O diagnósti
 
 ---
 
-## ⚙️ Solution & Impact
+## 💡 Solution & Impact
 
 Modelo de classificação binária (**Alto Risco / Baixo Risco**) treinado com dados clínicos reais, validado com cross-validation de 5 folds e otimizado via `RandomizedSearchCV` com foco em **recall** — minimizando falsos negativos, que representam o erro de maior impacto clínico na saúde.
 
@@ -172,13 +176,34 @@ Apesar do uso de Random Forest, o modelo não explica diretamente o "porquê" de
 
 ---
 
-## 🧠 Como funciona
+## 🤖 AI Assistant
 
-1. Usuário insere dados clínicos do paciente na interface
-2. Os dados passam por um pipeline de preprocessamento (normalização + encoding)
-3. O modelo `RandomForestClassifier` calibrado realiza a predição
-4. A interface retorna **Alto Risco** ou **Baixo Risco** em tempo real
+The application includes a Gemini-powered assistant capable of:
 
+- Explaining model performance metrics
+- Identifying the most important risk factors
+- Running patient risk assessments through tool calling
+- Answering questions about the model in natural language
+
+The assistant uses Google's Gemini API and integrates directly with the trained machine learning model.
+
+## 🧠 How It Works
+
+### Risk Prediction
+
+0. Acess 🔗 https://predict-health-risk-ia-vitor-albuquerque.streamlit.app/
+1. User enters clinical data
+2. Data is preprocessed
+3. Calibrated Random Forest generates probabilities
+4. Custom threshold converts probabilities into risk classes
+5. Results are displayed in Streamlit
+
+### AI Assistant
+
+1. User asks a question
+2. Gemini receives the request
+3. Gemini calls available tools when necessary
+4. The assistant returns explanations based on real model outputs
 ---
 
 ## 🛠️ Tecnologias
@@ -216,7 +241,7 @@ Dataset público do Kaggle com 918 registros de pacientes e 11 variáveis clíni
 
 ---
 
-## ▶️ Como executar
+## ▶️ Run Locally
 
 ```bash
 # 1. Clone o repositório
@@ -233,7 +258,6 @@ python train.py
 python launcher.py
 ```
 
----
 
 ## 👨‍💻 Autor
 

@@ -1,6 +1,8 @@
 # app.py - Interface com Streamlit para previsão de risco cardíaco
 import sys
 from pathlib import Path
+
+from llm.tools import MODEL_PATH, _load_model
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
 from dotenv import load_dotenv
@@ -16,13 +18,9 @@ import os
 st.set_page_config(page_title="Previsão de Risco Cardíaco", layout="centered")
 # Carregar modelo treinado
 @st.cache_resource
-def load_model():
-    if not PATHS["model_file"].exists():
-        raise FileNotFoundError("Modelo ainda não foi treinado")
-    return joblib.load(PATHS["model_file"])
 
 def main():
-    artefato = load_model()
+    artefato = _load_model()
     model = artefato["model"]
     threshold = artefato["threshold"]
 

@@ -436,11 +436,6 @@ def save_model(model: object, threshold: float, path: Path) -> None:
     print(f"Modelo salvo em: {path}")
 
 
-def load_model(path: Path) -> tuple:
-    if not path.exists():
-        raise FileNotFoundError(f"Modelo não encontrado: {path}")
-    artifact = joblib.load(path)
-    return artifact["model"], artifact["threshold"]
 
 
 # ── Execução principal ────────────────────────────────────────────────────────
