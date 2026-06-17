@@ -13,6 +13,7 @@ import pandas as pd
 import joblib
 import os
 
+st.set_page_config(page_title="Previsão de Risco Cardíaco", layout="centered")
 # Carregar modelo treinado
 @st.cache_resource
 def load_model():
@@ -25,7 +26,7 @@ def main():
     model = artefato["model"]
     threshold = artefato["threshold"]
 
-    st.set_page_config(page_title="Previsão de Risco Cardíaco", layout="centered")
+    
 
     # ── TABS ──────────────────────────────────────────────────────────────────────
     tab_previsao, tab_chat = st.tabs(["🫀 Previsão de Risco", "🤖 Assistente IA"])
